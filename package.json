@@ -1,7 +1,7 @@
 {
-  "name": "simplemde-rxjs",
-  "version": "2.0.0-beta.0",
-  "description": "A simple, beautiful, and embeddable JavaScript Markdown editor. Features autosaving and spell checking.",
+  "name": "simplemde-ef",
+  "version": "0.0.1",
+  "description": "Custom fork of simplemde.",
   "keywords": [
     "embeddable",
     "markdown",
