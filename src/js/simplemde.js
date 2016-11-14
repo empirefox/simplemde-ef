@@ -194,27 +194,17 @@ function toggleFullScreen(editor) {
 
 
 	// Update toolbar class
+	var onFullScreen = editor.options.onFullScreen;
 	var wrap = cm.getWrapperElement();
-	var zlist, item, i = 0;
-	if(editor.options.zlist && editor.options.zindex) {
-		zlist = document.querySelectorAll(editor.options.zlist);
-	}
 	if(!/fullscreen/.test(wrap.previousSibling.className)) {
 		wrap.previousSibling.className += " fullscreen";
-		if(zlist) {
-			for(i = 0; i < zlist.length; ++i) {
-				item = zlist[i];
-				item.zindex = item.style.zIndex;
-				item.style.zIndex = editor.options.zindex;
-			}
+		if(onFullScreen) {
+			onFullScreen(true);
 		}
 	} else {
 		wrap.previousSibling.className = wrap.previousSibling.className.replace(/\s*fullscreen\b/, "");
-		if(zlist) {
-			for(i = 0; i < zlist.length; ++i) {
-				item = zlist[i];
-				item.style.zIndex = item.zindex || "auto";
-			}
+		if(onFullScreen) {
+			onFullScreen(false);
 		}
 	}
 
