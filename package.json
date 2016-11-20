@@ -10,7 +10,7 @@
     "wysiwyg"
   ],
   "homepage": "https://github.com/NextStepWebs/simplemde-markdown-editor",
-  "main": "./src/js/simplemde.js",
+  "main": "dist/simplemde.min.js",
   "license": "MIT",
   "company": "Next Step Webs, Inc.",
   "author": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "codemirror": "*",
     "ismobilejs": "^0.4.0",
-    "rxjs": "^5.0.0-rc.1"
+    "rxjs": "*"
   },
   "devDependencies": {
     "browserify": "*",
