@@ -194,7 +194,7 @@ function toggleFullScreen(editor) {
 
 
 	// Update toolbar class
-	var onFullScreen = editor.options.onFullScreen;
+	var onFullScreen = editor.onFullScreen;
 	var wrap = cm.getWrapperElement();
 	if(!/fullscreen/.test(wrap.previousSibling.className)) {
 		wrap.previousSibling.className += " fullscreen";
@@ -616,8 +616,8 @@ function drawLink(editor) {
 	var cm = editor.codemirror;
 	var stat = getState(cm);
 	var options = editor.options;
-	if(options.onAddLink) {
-		return options.onAddLink(function(url) {
+	if(editor.onAddLink) {
+		return editor.onAddLink(function(url) {
 			_replaceSelection(cm, getState(cm).link, options.insertTexts.link, url);
 		});
 	}
@@ -631,8 +631,8 @@ function drawImage(editor) {
 	var cm = editor.codemirror;
 	var stat = getState(cm);
 	var options = editor.options;
-	if(options.onAddImage) {
-		return options.onAddImage(function(url) {
+	if(editor.onAddImage) {
+		return editor.onAddImage(function(url) {
 			_replaceSelection(cm, getState(cm).image, options.insertTexts.image, url);
 		});
 	}
@@ -646,8 +646,8 @@ function drawFa(editor) {
 	var cm = editor.codemirror;
 	var stat = getState(cm);
 	var options = editor.options;
-	if(options.onAddFa) {
-		return options.onAddFa(function(url) {
+	if(editor.onAddFa) {
+		return editor.onAddFa(function(url) {
 			_replaceSelection(cm, getState(cm).image, options.insertTexts.fa, url);
 		});
 	}
