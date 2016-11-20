@@ -42,7 +42,7 @@ Thumbs.db
 *.yml
 *.ts
 
-src
+#src
 .vscode
 config
 *.spec.*
