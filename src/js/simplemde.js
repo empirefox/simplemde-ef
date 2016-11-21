@@ -1224,6 +1224,13 @@ var toolbarBuiltInButtons = {
 	},
 	"fa": {
 		name: "fa",
+		action: drawFa,
+		className: "fa fa-flag-o",
+		title: "Insert FontAwesome",
+		default: true
+	},
+	"emoji": {
+		name: "emoji",
 		action: drawEmoji,
 		className: "fa fa-smile-o",
 		title: "Insert Emoji",
