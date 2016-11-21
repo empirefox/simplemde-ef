@@ -25,6 +25,7 @@ var bindings = {
 	"toggleHeadingSmaller": toggleHeadingSmaller,
 	"toggleHeadingBigger": toggleHeadingBigger,
 	"drawImage": drawImage,
+	"drawVideo": drawVideo,
 	"drawFa": drawFa,
 	"drawEmoji": drawEmoji,
 	"toggleLabel": toggleLabel,
@@ -640,30 +641,38 @@ function drawImage(editor) {
 	_replaceSelection(cm, stat.image, options.insertTexts.image, "http://");
 }
 
+function drawVideo(editor) {
+	var cm = editor.codemirror;
+	var stat = getState(cm);
+	if(editor.onAddVideo) {
+		return editor.onAddVideo(function(url) {
+			_replaceSelection(cm, stat.link, [url, ""]);
+		});
+	}
+}
+
 /**
  * Action for drawing an FontAwesome icon.
  */
 function drawFa(editor) {
 	var cm = editor.codemirror;
-	var stat = getState(cm);
 	var options = editor.options;
 	if(editor.onAddFa) {
 		return editor.onAddFa(function(url) {
-			_replaceSelection(cm, getState(cm).image, options.insertTexts.fa, url);
+			_replaceSelection(cm, false, options.insertTexts.fa, url);
 		});
 	}
-	_replaceSelection(cm, stat.image, options.insertTexts.fa, "fa-flag-o");
+	_replaceSelection(cm, false, options.insertTexts.fa, "fa-flag-o");
 }
 
 function drawEmoji(editor) {
 	var cm = editor.codemirror;
-	var stat = getState(cm);
 	if(editor.onAddEmoji) {
 		return editor.onAddEmoji(function(url) {
-			_replaceSelection(cm, getState(cm).image, [url, ""]);
+			_replaceSelection(cm, false, [url, ""]);
 		});
 	}
-	_replaceSelection(cm, stat.image, [":smile:", ""]);
+	_replaceSelection(cm, false, [":smile:", ""]);
 }
 
 /**
@@ -1222,6 +1231,13 @@ var toolbarBuiltInButtons = {
 		title: "Insert Image",
 		default: true
 	},
+	"video": {
+		name: "video",
+		action: drawVideo,
+		className: "fa fa-video-camera",
+		title: "Insert Video",
+		default: true
+	},
 	"fa": {
 		name: "fa",
 		action: drawFa,
@@ -1309,7 +1325,7 @@ var toolbarBuiltInButtons = {
 var insertTexts = {
 	link: ["[", "](#url#)"],
 	image: ["![](", "#url#)"],
-	fa: [":", "#url#:"],
+	fa: [":fa-", "#url#:"],
 	table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |\n\n"],
 	horizontalRule: ["", "\n\n-----\n\n"]
 };
@@ -1903,6 +1919,7 @@ SimpleMDE.toggleOrderedList = toggleOrderedList;
 SimpleMDE.cleanBlock = cleanBlock;
 SimpleMDE.drawLink = drawLink;
 SimpleMDE.drawImage = drawImage;
+SimpleMDE.drawVideo = drawVideo;
 SimpleMDE.drawFa = drawFa;
 SimpleMDE.drawEmoji = drawEmoji;
 SimpleMDE.toggleLabel = toggleLabel;
@@ -1961,6 +1978,9 @@ SimpleMDE.prototype.drawLink = function() {
 };
 SimpleMDE.prototype.drawImage = function() {
 	drawImage(this);
+};
+SimpleMDE.prototype.drawVideo = function() {
+	drawVideo(this);
 };
 SimpleMDE.prototype.drawFa = function() {
 	drawFa(this);
