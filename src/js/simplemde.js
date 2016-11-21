@@ -26,6 +26,7 @@ var bindings = {
 	"toggleHeadingBigger": toggleHeadingBigger,
 	"drawImage": drawImage,
 	"drawFa": drawFa,
+	"drawEmoji": drawEmoji,
 	"toggleLabel": toggleLabel,
 	"toggleBlockquote": toggleBlockquote,
 	"toggleOrderedList": toggleOrderedList,
@@ -654,6 +655,17 @@ function drawFa(editor) {
 	_replaceSelection(cm, stat.image, options.insertTexts.fa, "fa-flag-o");
 }
 
+function drawEmoji(editor) {
+	var cm = editor.codemirror;
+	var stat = getState(cm);
+	if(editor.onAddEmoji) {
+		return editor.onAddEmoji(function(url) {
+			_replaceSelection(cm, getState(cm).image, [url, ""]);
+		});
+	}
+	_replaceSelection(cm, stat.image, [":smile:", ""]);
+}
+
 /**
  * Action for drawing an img.
  */
@@ -1212,9 +1224,9 @@ var toolbarBuiltInButtons = {
 	},
 	"fa": {
 		name: "fa",
-		action: drawFa,
-		className: "fa fa-flag-o",
-		title: "Insert FontAwesome",
+		action: drawEmoji,
+		className: "fa fa-smile-o",
+		title: "Insert Emoji",
 		default: true
 	},
 	"label": {
@@ -1885,6 +1897,7 @@ SimpleMDE.cleanBlock = cleanBlock;
 SimpleMDE.drawLink = drawLink;
 SimpleMDE.drawImage = drawImage;
 SimpleMDE.drawFa = drawFa;
+SimpleMDE.drawEmoji = drawEmoji;
 SimpleMDE.toggleLabel = toggleLabel;
 SimpleMDE.drawTable = drawTable;
 SimpleMDE.drawHorizontalRule = drawHorizontalRule;
@@ -1944,6 +1957,9 @@ SimpleMDE.prototype.drawImage = function() {
 };
 SimpleMDE.prototype.drawFa = function() {
 	drawFa(this);
+};
+SimpleMDE.prototype.drawEmoji = function() {
+	drawEmoji(this);
 };
 SimpleMDE.prototype.toggleLabel = function() {
 	toggleLabel(this);
