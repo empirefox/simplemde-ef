@@ -26,6 +26,7 @@ var bindings = {
 	"toggleHeadingBigger": toggleHeadingBigger,
 	"drawImage": drawImage,
 	"drawVideo": drawVideo,
+	"drawMaps": drawMaps,
 	"drawFa": drawFa,
 	"drawEmoji": drawEmoji,
 	"toggleLabel": toggleLabel,
@@ -651,6 +652,16 @@ function drawVideo(editor) {
 	}
 }
 
+function drawMaps(editor) {
+	var cm = editor.codemirror;
+	var stat = getState(cm);
+	if(editor.onAddMaps) {
+		return editor.onAddMaps(function(url) {
+			_replaceSelection(cm, stat.link, [url, ""]);
+		});
+	}
+}
+
 /**
  * Action for drawing an FontAwesome icon.
  */
@@ -1236,6 +1247,13 @@ var toolbarBuiltInButtons = {
 		action: drawVideo,
 		className: "fa fa-video-camera",
 		title: "Insert Video",
+		default: true
+	},
+	"maps": {
+		name: "maps",
+		action: drawMaps,
+		className: "fa fa-map-o",
+		title: "Insert Maps",
 		default: true
 	},
 	"fa": {
@@ -1920,6 +1938,7 @@ SimpleMDE.cleanBlock = cleanBlock;
 SimpleMDE.drawLink = drawLink;
 SimpleMDE.drawImage = drawImage;
 SimpleMDE.drawVideo = drawVideo;
+SimpleMDE.drawMaps = drawMaps;
 SimpleMDE.drawFa = drawFa;
 SimpleMDE.drawEmoji = drawEmoji;
 SimpleMDE.toggleLabel = toggleLabel;
@@ -1981,6 +2000,9 @@ SimpleMDE.prototype.drawImage = function() {
 };
 SimpleMDE.prototype.drawVideo = function() {
 	drawVideo(this);
+};
+SimpleMDE.prototype.drawMaps = function() {
+	drawMaps(this);
 };
 SimpleMDE.prototype.drawFa = function() {
 	drawFa(this);
